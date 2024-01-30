@@ -2,6 +2,8 @@
 using System.Text.Json;
 using System.Text;
 using chatgptopenai.Model;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using System.Reflection.Metadata;
 
 namespace chatgptopenai.Services
 {
@@ -21,9 +23,9 @@ namespace chatgptopenai.Services
 
             var requestData = new
             {
-                prompt = prompt,
-                max_tokens = 4000,
-                model = "text-davinci-003",
+                model = "gpt-3.5-turbo",
+                messages = new[] { new { role = "user", content = prompt } },
+                max_tokens = 2000,
                 temperature = 0
             };
 
@@ -43,7 +45,10 @@ namespace chatgptopenai.Services
 
             // Extract the generated response
             ChatGptAPIResponse responseData = JsonSerializer.Deserialize<ChatGptAPIResponse>(responseBody);
-            string generatedText = responseData.choices[0].text;
+            // string generatedText = responseData.choices[0].text;
+            string generatedText = responseData.model;
+            
+            Console.WriteLine(responseData.choices[0]);
             return generatedText;
         }
     }
