@@ -46,9 +46,9 @@ namespace chatgptopenai.Services
             // Extract the generated response
             ChatGptAPIResponse responseData = JsonSerializer.Deserialize<ChatGptAPIResponse>(responseBody);
             // string generatedText = responseData.choices[0].text;
-            string generatedText = responseData.model;
-            
-            Console.WriteLine(responseData.choices[0]);
+            string generatedText = responseData.choices[0].message.content;
+
+            // Console.WriteLine(responseData.choices[0].message.content);
             return generatedText;
         }
     }
